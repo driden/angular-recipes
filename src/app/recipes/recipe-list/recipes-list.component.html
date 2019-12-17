@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-xs-12">
     <app-recipe-item
-      *ngFor="let recipe of recipes"
+      *ngFor="let recipe of recipesService.getRecipes()"
       [recipe]="recipe"
       (recipeSelected)="publishRecipe(recipe)"
     ></app-recipe-item>
