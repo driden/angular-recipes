@@ -1,11 +1,17 @@
 <div class="div">
-    <div class="col-xs-10">
-        <app-shopping-edit></app-shopping-edit>
-        <hr>
-        <ul class="list-group">
-            <a class="list-group-item" style="cursor: pointer;" *ngFor="let ingredient of ingredients">
-                {{ ingredient.name }} ({{ ingredient.amount }})
-            </a>
-        </ul>
-    </div>
+  <div class="col-xs-10">
+    <app-shopping-edit
+      (ingredientAdded)="addToShoppingList($event)"
+    ></app-shopping-edit>
+    <hr />
+    <ul class="list-group">
+      <a
+        class="list-group-item"
+        style="cursor: pointer;"
+        *ngFor="let ingredient of ingredients"
+      >
+        {{ ingredient.name }} ({{ ingredient.amount }})
+      </a>
+    </ul>
+  </div>
 </div>
