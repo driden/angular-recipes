@@ -1,34 +1,38 @@
 import { Component, OnInit } from "@angular/core";
 import { Ingredient } from "../shared/Ingredient";
+import { ShoppingListService } from "./shopping-list.service";
 
 @Component({
   selector: "app-shopping-list",
   templateUrl: "./shopping-list.component.html",
-  styleUrls: ["./shopping-list.component.css"]
+  styleUrls: ["./shopping-list.component.css"],
+  providers: [ShoppingListService]
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[] = [
-    new Ingredient("Apples", 5),
-    new Ingredient("Tomatoes", 2)
-  ];
+  constructor(private shopListSvc: ShoppingListService) {}
+  ingredients: Ingredient[];
 
-  constructor() {}
+  ngOnInit() {
+    this.ingredients = this.shopListSvc.getAll();
+  }
 
-  ngOnInit() {}
+  private findIngredient(name: string): Ingredient {
+    return this.ingredients.filter(
+      (ing, index) => name.toLowerCase() === ing.name.toLowerCase()
+    )[0];
+  }
 
-  addToShoppingList(newIngredient: Ingredient): void {
-    let added: boolean = false;
-    for (let i = 0; i < this.ingredients.length; i++) {
-      let currObj = this.ingredients[i];
-      if (currObj.name.toLowerCase() === newIngredient.name.toLowerCase()) {
-        currObj.amount += +newIngredient.amount;
-        added = true;
-        break;
-      }
+  onIngredientAdded(ingredient: Ingredient): void {
+    const ingredientInList: Ingredient = this.findIngredient(ingredient.name);
+
+    if (ingredientInList) {
+      ingredientInList.amount += +ingredient.amount;
+    } else {
+      this.ingredients.push(ingredient);
     }
+  }
 
-    if (!added) {
-      this.ingredients.push(newIngredient);
-    }
+  onIngredientDeleted(ingredient: Ingredient): void {
+    const ingredientInList: Ingredient = this.findIngredient(ingredient.name);
   }
 }

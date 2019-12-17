@@ -3,8 +3,8 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  Output,
-  EventEmitter
+  EventEmitter,
+  Output
 } from "@angular/core";
 import { Ingredient } from "src/app/shared/Ingredient";
 
@@ -14,18 +14,30 @@ import { Ingredient } from "src/app/shared/Ingredient";
   styleUrls: ["./shopping-edit.component.css"]
 })
 export class ShoppingEditComponent implements OnInit {
-  @ViewChild("inputName", { static: false }) inputNameRef: ElementRef;
-  @ViewChild("inputAmount", { static: false }) inputAmountRef: ElementRef;
+  @ViewChild("nameInput", { static: false }) nameInputRef: ElementRef;
+  @ViewChild("amountInput", { static: false }) amountInputRef: ElementRef;
   @Output() ingredientAdded = new EventEmitter<Ingredient>();
+  @Output() ingredientDeleted = new EventEmitter<Ingredient>();
 
   constructor() {}
 
   ngOnInit() {}
 
-  onAddIngredient() {
-    let ingredient: string = this.inputNameRef.nativeElement.value;
-    let amount: number = this.inputAmountRef.nativeElement.value;
+  onAddItem(): void {
+    const ingName = this.nameInputRef.nativeElement.value;
+    const ingAmount = this.amountInputRef.nativeElement.value;
+    const newIngredient = new Ingredient(ingName, ingAmount);
+    this.ingredientAdded.emit(newIngredient);
+  }
 
-    this.ingredientAdded.emit(new Ingredient(ingredient, amount));
+  onDeleteItem(): void {
+    const ingName = this.nameInputRef.nativeElement.value;
+    const newIngredient = new Ingredient(ingName, 0);
+    this.ingredientDeleted.emit(newIngredient);
+  }
+
+  onClearItem(): void {
+    this.nameInputRef.nativeElement.value = "";
+    this.amountInputRef.nativeElement.value = "";
   }
 }

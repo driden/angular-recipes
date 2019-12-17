@@ -1,7 +1,8 @@
 <div class="div">
   <div class="col-xs-10">
     <app-shopping-edit
-      (ingredientAdded)="addToShoppingList($event)"
+      (ingredientAdded)="onIngredientAdded($event)"
+      (ingredientDeleted)="onIngredientDeleted($event)"
     ></app-shopping-edit>
     <hr />
     <ul class="list-group">
