@@ -6,7 +6,7 @@ export class ShoppingListService {
     new Ingredient("Tomatoes", 2)
   ];
 
-  getIngredients(): Ingredient[] {
+  getAll(): Ingredient[] {
     return this.ingredients.slice();
   }
 
