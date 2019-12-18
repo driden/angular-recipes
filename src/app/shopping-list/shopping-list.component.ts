@@ -34,5 +34,11 @@ export class ShoppingListComponent implements OnInit {
 
   onIngredientDeleted(ingredient: Ingredient): void {
     const ingredientInList: Ingredient = this.findIngredient(ingredient.name);
+
+    if (ingredientInList && ingredientInList.amount > ingredient.amount) {
+      ingredientInList.amount -= +ingredient.amount;
+    } else if (ingredientInList) {
+      this.ingredients.splice(this.ingredients.indexOf(ingredientInList), 1);
+    }
   }
 }
