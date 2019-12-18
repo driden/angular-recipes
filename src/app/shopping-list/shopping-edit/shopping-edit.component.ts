@@ -1,12 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  EventEmitter,
-  Output
-} from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { Ingredient } from "src/app/shared/Ingredient";
+import { ShoppingListService } from "../shopping-list.service";
 
 @Component({
   selector: "app-shopping-edit",
@@ -16,10 +10,8 @@ import { Ingredient } from "src/app/shared/Ingredient";
 export class ShoppingEditComponent implements OnInit {
   @ViewChild("nameInput", { static: false }) nameInputRef: ElementRef;
   @ViewChild("amountInput", { static: false }) amountInputRef: ElementRef;
-  @Output() ingredientAdded = new EventEmitter<Ingredient>();
-  @Output() ingredientDeleted = new EventEmitter<Ingredient>();
 
-  constructor() {}
+  constructor(private shpSvc: ShoppingListService) {}
 
   ngOnInit() {}
 
@@ -27,16 +19,14 @@ export class ShoppingEditComponent implements OnInit {
     const ingName = this.nameInputRef.nativeElement.value;
     const ingAmount = +this.amountInputRef.nativeElement.value;
     const newIngredient = new Ingredient(ingName, ingAmount);
-
-    this.ingredientAdded.emit(newIngredient);
+    this.shpSvc.add(newIngredient);
   }
 
   onDeleteItem(): void {
     const ingName = this.nameInputRef.nativeElement.value;
     const ingAmount = +this.amountInputRef.nativeElement.value;
     const newIngredient = new Ingredient(ingName, ingAmount);
-
-    this.ingredientDeleted.emit(newIngredient);
+    this.shpSvc.delete(newIngredient);
   }
 
   onClearItem(): void {
