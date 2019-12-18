@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, ViewChild, ElementRef } from "@angular/core";
 import { Ingredient } from "src/app/shared/Ingredient";
 import { ShoppingListService } from "../shopping-list.service";
 
@@ -7,13 +7,11 @@ import { ShoppingListService } from "../shopping-list.service";
   templateUrl: "./shopping-edit.component.html",
   styleUrls: ["./shopping-edit.component.css"]
 })
-export class ShoppingEditComponent implements OnInit {
+export class ShoppingEditComponent {
   @ViewChild("nameInput", { static: false }) nameInputRef: ElementRef;
   @ViewChild("amountInput", { static: false }) amountInputRef: ElementRef;
 
   constructor(private shpSvc: ShoppingListService) {}
-
-  ngOnInit() {}
 
   onAddItem(): void {
     const ingName = this.nameInputRef.nativeElement.value;

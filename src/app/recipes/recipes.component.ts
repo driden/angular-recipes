@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 
 import { Recipe } from "./Recipe";
 import { RecipesService } from "./recipes.service";
+import { Ingredient } from "../shared/Ingredient";
 
 @Component({
   selector: "app-recipes",
