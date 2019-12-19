@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from "@angular/core";
+import { Component, ViewChild, ElementRef, Input } from "@angular/core";
 import { Ingredient } from "src/app/shared/Ingredient";
 import { ShoppingListService } from "../shopping-list.service";
 
@@ -31,4 +31,6 @@ export class ShoppingEditComponent {
     this.nameInputRef.nativeElement.value = "";
     this.amountInputRef.nativeElement.value = "";
   }
+
+  onIngredientAutoFill(ingredientToFill: Ingredient): void {}
 }
