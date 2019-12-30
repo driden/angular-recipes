@@ -21,10 +21,14 @@
       </button>
       <ul class="dropdown-menu">
         <li>
-          <a (click)="addIngredients()">To shopping list</a>
+          <a style="cursor: pointer;" (click)="addIngredients()"
+            >To shopping list</a
+          >
         </li>
-        <li><a href="#">Edit Recipe</a></li>
-        <li><a href="#">Delete Recipe</a></li>
+        <li>
+          <a style="cursor: pointer;" routerLink="edit">Edit Recipe</a>
+        </li>
+        <li><a style="cursor: pointer;">Delete Recipe</a></li>
       </ul>
     </div>
   </div>
