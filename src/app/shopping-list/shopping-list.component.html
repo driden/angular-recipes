@@ -1,1 +1,18 @@
-<p>shopping-list works!</p>
+<div class="div">
+  <div class="col-xs-10">
+    <app-shopping-edit
+      (ingredientChanged)="onIngredientAutoFill($event)"
+    ></app-shopping-edit>
+    <hr />
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        style="cursor: pointer;"
+        *ngFor="let ingredient of shopListSvc.getAll()"
+        (click)="onIngredientClicked(ingredient)"
+      >
+        {{ ingredient.name }} ({{ ingredient.amount }})
+      </li>
+    </ul>
+  </div>
+</div>
