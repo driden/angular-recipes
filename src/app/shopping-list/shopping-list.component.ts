@@ -1,21 +1,25 @@
-import { Component, Output, EventEmitter } from "@angular/core";
-import { ShoppingListService } from "./shopping-list.service";
+import { Component, OnInit } from "@angular/core";
+import { Subject, Observable } from "rxjs";
+
 import { Ingredient } from "../shared/Ingredient";
+import { ShoppingListService } from "./shopping-list.service";
 
 @Component({
   selector: "app-shopping-list",
   templateUrl: "./shopping-list.component.html",
   styleUrls: ["./shopping-list.component.css"]
 })
-export class ShoppingListComponent {
-  // no sirve esto.
-  @Output() ingredientChanged = new EventEmitter<Ingredient>();
+export class ShoppingListComponent implements OnInit {
+  ingredientChanged = new Subject<Ingredient>();
+  obsIngredient: Observable<Ingredient>;
 
-  constructor(private shopListSvc: ShoppingListService) {}
+  ngOnInit(): void {
+    this.obsIngredient = this.ingredientChanged.asObservable();
+  }
 
   onIngredientClicked(clickedIngredient: Ingredient) {
-    console.log("Clicked on:", clickedIngredient);
-    // no puedo emitir a un hijo, necesito otra cosa.
-    this.ingredientChanged.emit(clickedIngredient);
+    this.ingredientChanged.next(clickedIngredient);
   }
+
+  constructor(private shopListSvc: ShoppingListService) {}
 }
