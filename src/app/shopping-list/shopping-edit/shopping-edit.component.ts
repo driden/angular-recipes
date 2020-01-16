@@ -1,14 +1,9 @@
-import {
-  Component,
-  ViewChild,
-  ElementRef,
-  Input,
-  OnInit,
-  OnDestroy
-} from "@angular/core";
+import { Component, ViewChild, OnInit, OnDestroy } from "@angular/core";
+import { Subscription } from "rxjs";
+import { NgForm } from "@angular/forms";
+
 import { Ingredient } from "src/app/shared/Ingredient";
 import { ShoppingListService } from "../shopping-list.service";
-import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: "app-shopping-edit",
@@ -16,43 +11,43 @@ import { Observable, Subscription } from "rxjs";
   styleUrls: ["./shopping-edit.component.css"]
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy {
-  @ViewChild("nameInput", { static: false }) nameInputRef: ElementRef;
-  @ViewChild("amountInput", { static: false }) amountInputRef: ElementRef;
-  @Input() selectedIngredient: Observable<Ingredient>;
-  ingredientChangeSubscription: Subscription;
+  @ViewChild("shopForm", { static: false }) shoppingForm: NgForm;
+  ingredientEditSubscription: Subscription;
+
+  constructor(private shpSvc: ShoppingListService) {}
 
   ngOnInit(): void {
-    this.ingredientChangeSubscription = this.selectedIngredient.subscribe(
+    this.ingredientEditSubscription = this.shpSvc.editingIngredient.subscribe(
       ingredient => {
-        console.log("cambio en el observer");
-        this.nameInputRef.nativeElement.value = ingredient.name;
-        this.amountInputRef.nativeElement.value = ingredient.amount;
+        this.shoppingForm.setValue({
+          name: ingredient.name,
+          amount: ingredient.amount
+        });
       }
     );
   }
 
   ngOnDestroy(): void {
-    this.ingredientChangeSubscription.unsubscribe();
+    this.ingredientEditSubscription.unsubscribe();
   }
 
-  constructor(private shpSvc: ShoppingListService) {}
-
   onAddItem(): void {
-    const ingName = this.nameInputRef.nativeElement.value;
-    const ingAmount = +this.amountInputRef.nativeElement.value;
-    const newIngredient = new Ingredient(ingName, ingAmount);
+    const newIngredient = this.getFormIngredient();
     this.shpSvc.add(newIngredient);
   }
 
   onDeleteItem(): void {
-    const ingName = this.nameInputRef.nativeElement.value;
-    const ingAmount = +this.amountInputRef.nativeElement.value;
-    const newIngredient = new Ingredient(ingName, ingAmount);
+    const newIngredient = this.getFormIngredient();
     this.shpSvc.delete(newIngredient);
   }
 
   onClearItem(): void {
-    this.nameInputRef.nativeElement.value = "";
-    this.amountInputRef.nativeElement.value = "";
+    this.shoppingForm.reset();
+  }
+
+  private getFormIngredient(): Ingredient {
+    const ingName = this.shoppingForm.controls.name.value;
+    const ingAmount = +this.shoppingForm.controls.amount.value;
+    return new Ingredient(ingName, ingAmount);
   }
 }
