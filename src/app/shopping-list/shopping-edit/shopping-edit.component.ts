@@ -34,11 +34,13 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onAddItem(): void {
     const newIngredient = this.getFormIngredient();
     this.shpSvc.add(newIngredient);
+    this.onClearItem();
   }
 
   onDeleteItem(): void {
     const newIngredient = this.getFormIngredient();
     this.shpSvc.delete(newIngredient);
+    this.onClearItem();
   }
 
   onClearItem(): void {
