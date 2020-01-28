@@ -7,13 +7,17 @@ import {
 
 import { Recipe } from '../Recipe';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
+import { RecipesService } from '../recipes.service';
 
 @Injectable({ providedIn: 'root' })
 export class RecipesResolverService implements Resolve<Recipe[]> {
-  constructor(private dataStorageService: DataStorageService) {}
+  constructor(
+    private dataStorageService: DataStorageService,
+    private recipeService: RecipesService
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    // angular se subscribe solo
-    return this.dataStorageService.fetch();
+    const recipes = this.recipeService.getAll();
+    return recipes.length === 0 ? this.dataStorageService.fetch() : recipes;
   }
 }
