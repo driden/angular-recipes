@@ -15,7 +15,7 @@ export class RecipesListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(
-    public recipesService: RecipesService,
+    private recipesService: RecipesService,
     private router: Router,
     private route: ActivatedRoute
   ) {}

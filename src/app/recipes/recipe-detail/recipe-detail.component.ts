@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Data, Router } from '@angular/router';
+import { ActivatedRoute, Router, Params, Data } from '@angular/router';
 
 import { Recipe } from '../Recipe';
 import { Ingredient } from '../../shared/Ingredient';
@@ -26,8 +26,9 @@ export class RecipeDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe((data: Data) => {
-      this.recipe = data.recipe;
+    this.route.params.subscribe((recipeId: Params) => {
+      const id = +recipeId.id;
+      this.recipe = this.recipeService.get(id);
     });
   }
 
