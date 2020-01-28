@@ -19,6 +19,7 @@ import { RecipeDetailResolver } from './recipes/recipe-detail/recipe-detail-reso
 import { RecipesService } from './recipes/recipes.service';
 import { NoRecipeComponent } from './recipes/no-recipe/no-recipe.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
     ShoppingEditComponent,
     DropdownDirective,
     NoRecipeComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    AuthComponent
   ],
   providers: [ShoppingListService, RecipesService, RecipeDetailResolver],
   bootstrap: [AppComponent]
