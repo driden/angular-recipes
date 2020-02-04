@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { authUrl } from './firebaseAuthConfig';
+
 interface AuthResponse {
   kind: string;
   idToken: string;
@@ -17,14 +19,11 @@ export class AuthService {
 
   signup(email: string, password: string): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDsNu4cyYY3xMGwAKl0QRR0VnE3rzaksQM',
-        {
-          email,
-          password,
-          returnSecureToken: true
-        }
-      )
+      .post<AuthResponse>(authUrl, {
+        email,
+        password,
+        returnSecureToken: true
+      })
       .pipe(
         catchError(errorRes => {
           let errorMsg = 'An unknown error occurred';
