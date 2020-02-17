@@ -9,7 +9,7 @@ import { AuthComponent } from './auth.component';
 @NgModule({
   imports: [
     FormsModule,
-    RouterModule.forChild([{ path: 'auth', component: AuthComponent }]),
+    RouterModule.forChild([{ path: '', component: AuthComponent }]),
     CommonModule,
     SharedModule
   ],
