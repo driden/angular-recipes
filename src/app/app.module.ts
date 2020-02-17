@@ -8,10 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Modules
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core.module';
-import { AuthModule } from './auth/auth.module';
 
 // Components
 import { HeaderComponent } from './header/header.component';
@@ -21,11 +19,9 @@ import { HeaderComponent } from './header/header.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    // RecipesModule, no lo importo eagerly porque ya lo importo de manera lazy
-    ShoppingListModule,
+    // RecipesModule, ShoppingListModule y AuthModule no los importo eagerly porque ya los importo de manera lazy
     SharedModule,
-    CoreModule,
-    AuthModule
+    CoreModule
   ],
   declarations: [AppComponent, HeaderComponent],
   bootstrap: [AppComponent]
